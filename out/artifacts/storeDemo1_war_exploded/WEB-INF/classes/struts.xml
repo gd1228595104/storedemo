@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+
+        "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+
+        "http://struts.apache.org/dtds/struts-2.3.dtd">
+        <struts>
+        <constant name="struts.objectFactory" value="spring"></constant>
+    <package name="testAction" extends="struts-default" namespace="/">
+        <action name="registesAction" class="RegistesAction" method="execute">
+            <result name="success">login.jsp</result>
+            <result name="error">register.jsp</result>
+        </action>
+        <action name="loginAction" class="LoginAction">
+            <result name="success">index.jsp</result>
+            <result name="error">login.jsp</result>
+        </action>
+        <action name="index" class="AllGoodsAction">
+            <result name="success">index.jsp</result>
+        </action>
+        <action name="SingleGoodsAction"  class="SingleGoodsAction">
+            <result name="success">single.jsp</result>
+        </action>
+        <action name="ProductAction" class="ProductAction">
+            <result name="success">products.jsp</result>
+        </action>
+        <action name="CheckoutAction" class="CheckOutAction">
+            <result name="success">checkout.jsp</result>
+        </action>
+        <action name="CheckoutAction2" class="CheckOutAction" method="check">
+            <result name="success">checkout.jsp</result>
+        </action>
+        <action name="PayAction" class="PayAction">
+            <result name="error">login.jsp</result>
+            <result name="success">pay.jsp</result>
+        </action>
+        <action name="PayAction_0" class="PayAction_0">
+            <result name="success"></result>
+            <result name="error">login.jsp</result>
+        </action>
+        <action name="PayAction_2" class="PayAction_2">
+            <result name="success">test.jsp</result>
+        </action>
+        <action name="AdminLoginAction" class="AdminLoginAction">
+            <result name="success">userindex.jsp</result>
+            <result name="error">userlogin.jsp</result>
+        </action>
+        <action name="adminAllGoodsAction" class="AllGoodsAction" method="adminAllGoods">
+            <result name="success">house_list.jsp</result>
+        </action>
+        <action name="GoodsKindAction" class="GoodsKindAction">
+            <result name="success">house_list.jsp</result>
+        </action>
+        <action name="*PagesAction" class="PagesAction" method="{1}">
+            <result name="GoodsInfo">house_list.jsp</result>
+            <result name="OrderInfo">order_list.jsp</result>
+        </action>
+
+        <action name="createAction" class="CreateGoodsAction">
+            <result name="success">house_edit.jsp</result>
+            <result name="error">house_edit.jsp</result>
+        </action>
+        <action name="*Action" class="CreateGoodsAction" method="{1}">
+            <result name="DELETE">house_list.jsp</result>
+            <result name="DeleteManyGoods">house_list.jsp</result>
+            <result name="SelectGoods">house_edit.jsp</result>
+            <result name="UpdateGoods">house_list.jsp</result>
+            <result name="ExportGoodsInfo">house_list.jsp</result>
+        </action>
+        <action name="*Action2" class="OrderInfoAction" method="{1}">
+            <result name="ShowOrderInfo">order_list.jsp</result>
+            <result name="SelectOrderDetail">orderdetail_list.jsp</result>
+            <result name="ExportOrderDetails">orderdetail_list.jsp</result>
+            <result name="ExportOrderInfo">order_list.jsp</result>
+        </action>
+        <action name="*Action3" class="CustomerInfoAction" method="{1}">
+            <result name="ShowAllCustomer">customer_list.jsp</result>
+            <result name="ExportCustomerInfo">customer_list.jsp</result>
+        </action>
+        <action name="*action" class="InsearchOrderInfoAction" method="{1}">
+            <result name="InsearchOrderInfo">order_list.jsp</result>
+            <result name="UpdateOrderInfo">order_list.jsp</result>
+            <result name="SelectOrderInfo">order_list_edit.jsp</result>
+            <result name="DeleteOrderInfo">order_list.jsp</result>
+            <result name="DeleteManyOrderInfo">order_list.jsp</result>
+        </action>
+    </package>
+        </struts>

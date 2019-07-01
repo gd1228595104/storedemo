@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xmlns:context="http://www.springframework.org/schema/context" 
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+	
+	<!-- 配置c3p0数据库连接池 -->
+	 <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+     	<!-- 注入属性值 -->
+     	<property name="driverClass" value="com.mysql.jdbc.Driver"></property>
+     	<property name="jdbcUrl" value="jdbc:mysql://localhost:3306/xiaomi?useUnicode=true&amp;characterEncoding=UTF-8"></property>
+     	<property name="user" value="root"></property>
+     	<property name="password" value="123456"></property>
+     </bean>
+	<!-- 管理sessionFacrory -->
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"></property>
+		<property name="configLocations" value="classpath:hibernate.cfg.xml"></property>
+	</bean>
+	<!-- 配置事务管理器 -->
+	<bean id="transcationManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>	
+	<tx:annotation-driven transaction-manager="transcationManager"/>
+	 
+
+	<bean id="hibernateTemplate" class="org.springframework.orm.hibernate5.HibernateTemplate">
+	 	<property name="sessionFactory" ref="sessionFactory"></property>
+	 </bean>
+
+<!--	<bean id="userDao" class="service.UserDao">
+		<property name="hibernateTemplate" ref="hibernateTemplate"></property>
+	</bean>
+	<bean id="userService" class="service.UserService">
+			<property name="userDao" ref="userDao"></property>
+	</bean>
+	&lt;!&ndash; 测试类&ndash;&gt;
+	<bean id="UserAction" class="action.UserAction" scope="prototype">
+		<property name="userService" ref="userService"></property>
+	</bean>-->
+	<!--配置实现类-->
+	<bean id="CrudDaoImpl" class="daoImpl.CustomerCrudDaoImpl">
+		<property name="hibernateTemplate" ref="hibernateTemplate"></property>
+	</bean>
+	<bean id="AllGoodsImpl" class="daoImpl.AllGoodsImpl">
+		<property name="hibernateTemplate" ref="hibernateTemplate"></property>
+	</bean>
+	<bean id="SingleGoods" class="daoImpl.SingleGoods">
+		<property name="hibernateTemplate" ref="hibernateTemplate"></property>
+	</bean>
+	<bean id="AdminLogin" class="daoImpl.AdminLogin">
+		<property name="hibernateTemplate" ref="hibernateTemplate"></property>
+	</bean>
+	<bean id="AllGoodsKind" class="daoImpl.AllGoodsKind">
+		<property name="hibernateTemplate" ref="hibernateTemplate"></property>
+	</bean>
+	<bean id="admingoods_cu" class="daoImpl.admingoods_cu">
+		<property name="hibernateTemplate" ref="hibernateTemplate"></property>
+	</bean>
+	<bean id="OrderInfo_crud" class="daoImpl.OrderInfo_crud">
+		<property name="hibernateTemplate" ref="hibernateTemplate"></property>
+	</bean>
+	<bean id="CustomerInfo_cu" class="daoImpl.CustomerInfo_cu">
+		<property name="hibernateTemplate" ref="hibernateTemplate"></property>
+	</bean>
+	<!--注册action-->
+	<bean id="RegistesAction" class="action.RegistesAction" scope="prototype">
+		<property name="registesService" ref="RegistesService"></property>
+	</bean>
+	<!--配置Service-->
+	<bean id="RegistesService" class="service.RegistesService">
+		<property name="crudDao" ref="CrudDaoImpl"></property>
+	</bean>
+	<bean id="GoodsService" class="service.GoodsService">
+		<property name="allGoods" ref="AllGoodsImpl"></property>
+        <property name="singleGoods" ref="SingleGoods"></property>
+	</bean>
+	<bean id="AdminLoginService" class="service.AdminloginService">
+		<property name="adminLogin" ref="AdminLogin"></property>
+	</bean>
+	<bean id="AdminGoodsService" class="service.adminGoodsService">
+		<property name="allGoodsKind" ref="AllGoodsKind"></property>
+		<property name="adminCu" ref="admingoods_cu"></property>
+		<property name="customerInfo_cu" ref="CustomerInfo_cu"></property>
+	</bean>
+	<bean id="OrderInfo_Service" class="service.OrderInfo_Service">
+		<property name="orderInfo_crud" ref="OrderInfo_crud"></property>
+	</bean>
+	<bean id="AdminService" class="service.AdminService">
+		<property name="customerInfo_cu" ref="CustomerInfo_cu"></property>
+	</bean>
+	<!--登录action-->
+	<bean id="LoginAction" class="action.LoginAction" scope="prototype">
+		<property name="registesService" ref="RegistesService"></property>
+	</bean>
+	<bean id="AllGoodsAction" class="action.AllGoodsAction" scope="prototype">
+		<property name="goodsService" ref="GoodsService"></property>
+		<property name="admingoodsService" ref="AdminGoodsService"></property>
+	</bean>
+<bean id="SingleGoodsAction" class="action.SingleGoodsAction" scope="prototype">
+	<property name="goodsService" ref="GoodsService"></property>
+</bean>
+	<bean id="CheckOutAction" class="action.CheckoutAction" scope="prototype">
+		<property name="goodsService" ref="GoodsService"></property>
+		<property name="checkOut" ref="CheckOut"></property>
+	</bean>
+	<bean name="ProductAction" class="action.ProductAction" scope="prototype"></bean>
+	<bean name="PayAction" class="action.PayAction">
+		<property name="admingoodsService" ref="AdminGoodsService"></property>
+	</bean>
+	<bean name="PayAction_0" class="action.PayAction_0">
+		<property name="admingoodsservice" ref="AdminGoodsService"></property>
+	</bean>
+	<bean name="PayAction_2" class="action.PayAction_2">
+		<property name="admingoodsservice" ref="AdminGoodsService"></property>
+	</bean>
+	<bean name="AdminLoginAction" class="action.AdmimLoginAction" scope="prototype">
+		<property name="adminloginService" ref="AdminLoginService"></property>
+	</bean>
+	<bean name="GoodsKindAction" class="action.GoodsKindAction" scope="prototype">
+		<property name="admingoodsService" ref="AdminGoodsService"></property>
+	</bean>
+	<bean name="PagesAction" class="action.PagesAction" scope="prototype"></bean>
+	<bean name="CreateGoodsAction" class = "action.CreateGoodsAction" scope="prototype">
+		<property name="admingoodsservice" ref="AdminGoodsService"></property>
+	</bean>
+	<bean name="OrderInfoAction" class="action.OrderInfoAction" scope="prototype">
+		<property name="orderInfo_service" ref="OrderInfo_Service"></property>
+	</bean>
+	<bean name="CustomerInfoAction" class="action.CustomerInfoAction" scope="prototype">
+		<property name="adminService" ref="AdminService"></property>
+	</bean>
+	<bean name="InsearchOrderInfoAction" class="action.InsearchOrderInfoAction" scope="prototype">
+		<property name="orderInfo_service" ref="OrderInfo_Service"></property>
+	</bean>
+	<!--配置model类-->
+	<bean id="CheckOut" class="model.CheckOut"></bean>
+</beans>

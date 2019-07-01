@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+    <hibernate-mapping>
+    	<class name="bean.Goods" table="goods">
+    		<id name="id" column="id">
+    			<generator class="native"></generator>
+    		</id>
+			<property name="goods_name" column="goods_name"></property>
+    		<property name="goods_id" column="goods_id"></property>
+    		<property name="kind_id" column="kind_id"></property>
+			<property name="price" column="price"></property>
+			<property name="stock_number" column="stock_number"></property>
+			<property name="sales_number" column="sales_number"></property>
+			<property name="info" column="info"></property>
+			<property name="fileadress" column="fileadress"></property>
+    	</class>
+    </hibernate-mapping>
